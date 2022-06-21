@@ -1,6 +1,7 @@
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Player implements Runnable {
+    private final int COUNT = 5;
     private final int TIME = 2000;
     private final AtomicBoolean toggle;
 
@@ -10,7 +11,9 @@ public class Player implements Runnable {
 
     @Override
     public void run() {
-        toggleSwitchOn(toggle);
+        for (int i = 0; i < COUNT; i++) {
+            toggleSwitchOn(toggle);
+        }
     }
 
     private void toggleSwitchOn(AtomicBoolean atomicBoolean) {
