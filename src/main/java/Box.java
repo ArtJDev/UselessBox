@@ -1,7 +1,6 @@
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Box implements Runnable {
-    private final int TIME = 1000;
     private final AtomicBoolean toggle;
 
     public Box(AtomicBoolean toggle) {
@@ -10,18 +9,13 @@ public class Box implements Runnable {
 
     @Override
     public void run() {
-        toggleSwitchOff(toggle);
+        toggleSwitchOff();
     }
 
-    private void toggleSwitchOff(AtomicBoolean atomicBoolean) {
-        try {
-            if (atomicBoolean.get()) {
-                Thread.sleep(TIME);
-                System.out.println(Thread.currentThread().getName() + " выключила тумблер");
-                atomicBoolean.getAndSet(false);
-            }
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+    private void toggleSwitchOff() {
+        if (toggle.get()) {
+            System.out.println(Thread.currentThread().getName() + " выключила тумблер");
+            toggle.getAndSet(false);
         }
     }
 }

@@ -4,11 +4,11 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         AtomicBoolean toggle = new AtomicBoolean(false);
 
-        Thread player = new Thread(new Player(toggle), "Игрок");
-        player.start();
-
-        while (player.isAlive()) {
+        for (int i = 0; i < 5; i++) {
+            Thread player = new Thread(new Player(toggle), "Игрок");
             Thread box = new Thread(new Box(toggle), "Коробка");
+            player.start();
+            player.join();
             box.start();
             box.join();
         }
