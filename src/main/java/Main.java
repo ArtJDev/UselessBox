@@ -1,16 +1,42 @@
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
-        AtomicBoolean toggle = new AtomicBoolean(false);
+    static volatile boolean toggle;
+    static volatile int count = 5;
+    static int sleep = 1000;
 
-        for (int i = 0; i < 5; i++) {
-            Thread player = new Thread(new Player(toggle), "Игрок");
-            Thread box = new Thread(new Box(toggle), "Коробка");
-            player.start();
-            player.join();
-            box.start();
-            box.join();
+    public static void main(String[] args) {
+
+        Thread player = new Thread(new Player(), "Игрок");
+        player.start();
+
+        Thread box = new Thread(new Box(), "Коробка");
+        box.start();
+    }
+
+    static class Player extends Thread {
+        @Override
+        public void run() {
+            while (count > 0) {
+                System.out.println(Thread.currentThread().getName() + " включил тумблер");
+                toggle = true;
+                count--;
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    static class Box extends Thread {
+        @Override
+        public void run() {
+            while (count > 0) {
+                if (toggle) {
+                    System.out.println(Thread.currentThread().getName() + " выключила тумблер");
+                    toggle = false;
+                }
+            }
         }
     }
 }
