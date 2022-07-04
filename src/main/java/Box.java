@@ -1,5 +1,5 @@
 class Box extends Thread {
-    volatile static boolean toggle;
+    static volatile boolean toggle;
 
     @Override
     public void run() {
