@@ -1,5 +1,5 @@
 class Player extends Thread {
-    private static final int SLEEP = 1000;
+    static final int SLEEP = 1000;
     private static int count = 5;
 
     @Override
