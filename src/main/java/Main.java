@@ -1,6 +1,11 @@
 public class Main {
     public static void main(String[] args) {
-        new Thread(new Player(), "Игрок").start();
-        new Thread(new Box(), "Коробка").start();
+        Box box = new Box();
+        Player player = new Player(box);
+
+        box.setName("Игрушка");
+        box.start();
+        player.setName("Игрок");
+        player.start();
     }
 }
